@@ -9,6 +9,11 @@ app.use(cors());
 // Models
 const Ocorrencia = require('./models/Ocorrencia/index');
 
+// Routers
+const ocorrenciaRouter = require('./routers/Ocorrencia/index');
+
+app.use("/ocorrencias", ocorrenciaRouter);
+
 sequelize.sync()
     .then(() => {
         app.listen(3000, () => {
