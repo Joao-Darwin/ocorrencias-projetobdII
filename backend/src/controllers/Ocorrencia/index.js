@@ -14,6 +14,14 @@ const findAllOcorrencias = async (req, res) => {
     res.send(allOcorrencias);
 }
 
+const findOcorrenciaById = async (req, res) => {
+    const idOcorrencia = req.params.id;
+
+    const ocorrencia = await Ocorrencia.findOne({where: {id: idOcorrencia}});
+
+    res.send(ocorrencia);
+}
+
 const updateOcorrencia = async (req, res) => {
     const idOcorrencia = req.params.id;
     const ocorrenciaUpdated = req.body;
@@ -34,6 +42,7 @@ const removeOcorrencia = async (req, res) => {
 module.exports = {
     saveOcorrencia,
     findAllOcorrencias,
+    findOcorrenciaById,
     updateOcorrencia,
     removeOcorrencia
 }
