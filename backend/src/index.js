@@ -1,3 +1,4 @@
+require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const sequelize = require('./database/index');
@@ -14,9 +15,11 @@ const ocorrenciaRouter = require('./routers/Ocorrencia/index');
 
 app.use("/ocorrencias", ocorrenciaRouter);
 
+const portApplication = process.env.PORT;
+
 sequelize.sync()
     .then(() => {
-        app.listen(3000, () => {
+        app.listen(portApplication, () => {
             console.log(`Aplicação rodando na porta 3000`);
         });
     })
