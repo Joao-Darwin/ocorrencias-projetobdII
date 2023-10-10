@@ -23,8 +23,17 @@ const updateOcorrencia = async (req, res) => {
     res.send(ocorrenciaUpdated);
 };
 
+const removeOcorrencia = async (req, res) => {
+    const idOcorrencia = req.params.id;
+
+    await Ocorrencia.destroy({where: {id: idOcorrencia}});
+
+    res.send(`Ocorrencia de ID #${idOcorrencia} removido`);
+}
+
 module.exports = {
     saveOcorrencia,
     findAllOcorrencias,
-    updateOcorrencia
+    updateOcorrencia,
+    removeOcorrencia
 }
