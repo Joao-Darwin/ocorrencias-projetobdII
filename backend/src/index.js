@@ -3,9 +3,11 @@ const express = require('express');
 const sequelize = require('./database/index');
 
 const app = express();
-
 app.use(express.json());
 app.use(cors());
+
+// Models
+const Ocorrencia = require('./models/Ocorrencia/index');
 
 sequelize.sync()
     .then(() => {
@@ -15,4 +17,4 @@ sequelize.sync()
     })
     .catch((err) => {
         console.log("Erro ao iniciar aplicação: " + err);
-    })
+    });
