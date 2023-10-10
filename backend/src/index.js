@@ -13,6 +13,7 @@ const Ocorrencia = require('./models/Ocorrencia/index');
 // Routers
 const ocorrenciaRouter = require('./routers/Ocorrencia/index');
 
+// Midlewares
 app.use("/ocorrencias", ocorrenciaRouter);
 
 const portApplication = process.env.PORT;
