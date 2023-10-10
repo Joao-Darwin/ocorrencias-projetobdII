@@ -1,9 +1,10 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../database/index');
 
-const Ocorrencia = sequelize.define("Ocorrencia" ,{
+const Ocorrencia = sequelize.define("Ocorrencia", {
     titulo: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: false
     },
     tipo: {
         type: DataTypes.STRING
@@ -12,7 +13,7 @@ const Ocorrencia = sequelize.define("Ocorrencia" ,{
         type: DataTypes.DATE
     },
     hora: {
-        type: DataTypes.DATE
+        type: DataTypes.STRING
     },
     localizacaoGeografica: {
         type: DataTypes.GEOMETRY
