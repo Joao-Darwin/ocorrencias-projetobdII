@@ -196,7 +196,7 @@ async function addMarker(lat, lng, title) {
     map,
     title: title,
     animation: google.maps.Animation.DROP,
-    icon: "https://img.icons8.com/color/32/chess-com.png",
+    icon: "https://img.icons8.com/color/48/marker--v1.png",
   }).addListener("dblclick", () => {
     alert(`Lat: ${lat} \nLng: ${lng}\nTitle: ${title}`);
   });
