@@ -200,7 +200,7 @@ async function addMarker(ocurrence) {
     map,
     title: ocurrence.titulo,
     animation: google.maps.Animation.DROP,
-    icon: "https://img.icons8.com/color/48/marker--v1.png",
+    icon: "./icons8-marcador-48.png",
   }).addListener("dblclick", () => {
     const data = new Date(ocurrence.data);
     Swal.fire({
