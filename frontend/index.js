@@ -204,16 +204,11 @@ async function addMarker(ocurrence) {
   }).addListener("dblclick", () => {
     const data = new Date(ocurrence.data);
     Swal.fire({
-      title: `
-      <div>
-        <h1>Título: ${ocurrence.titulo}</h1>
-        <br>
-        <h2>Tipo: ${ocurrence.tipo}</h2>
-        <br>
-        <h2>Data: ${data.getDate()}/${data.getMonth()}/${data.getFullYear()}</h2>
-        <br>
-        <h2>Hora: ${data.getHours()}:${data.getMinutes()}</h2>
-      </div>
+      html: `
+        <h3>Título: ${ocurrence.titulo}</h3>
+        <h3>Tipo: ${ocurrence.tipo}</h3>
+        <h3>Data: ${data.getDate()}/${data.getMonth()}/${data.getFullYear()}</h3>
+        <h3>Hora: ${data.getHours()}:${data.getMinutes()}</h3>
       `,
       confirmButtonText: "Fechar",
     });

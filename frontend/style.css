@@ -17,7 +17,7 @@ body {
 
 .modal {
   display: none;
-  background: linear-gradient(45deg, purple, blue, aqua, green, yellow, orange, red);
+  background: linear-gradient(45deg, rgb(163, 137, 233), rgb(78, 48, 211));
   padding: 1rem;
   align-items: center;
   width: 40%;
