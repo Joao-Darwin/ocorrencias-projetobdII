@@ -16,53 +16,53 @@ elBtnSubmit.addEventListener("click", () => {
 });
 
 async function postOcurrence() {
-  const datetimeValue = new Date(elIptDateTime.value);
+  const datetimeValue = elIptDateTime.value + ":00Z";
 
   const ocurrenceData = {
-    localizacaoGeografica: {
-      type: "Point",
-      coordinates: {
-        lat: clickLat,
-        lng: clickLng,
-      }
-    },
     titulo: elIptTitle.value,
     tipo: elIptType.value,
     data: datetimeValue,
+    localizacaoGeografica: {
+      type: "Point",
+      coordinates: [clickLat, clickLng]
+    },
   };
 
   console.log(ocurrenceData);
 
   const options = {
     method: "POST",
-    Headers: {
-      Accept: "application.json",
+    headers: { // Deve ser "headers", não "Headers"
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
-    body: ocurrenceData,
-    Cache: "default",
+    body: JSON.stringify(ocurrenceData),
+    cache: "default", // Deve ser "cache", não "Cache"
   };
-
-  await fetch("http://localhost:3000/ocorrencias/save", options)
-    .then(async () => {
+  
+  try {
+    const response = await fetch("http://localhost:3000/ocorrencias/save", options);
+    if (response.ok) {
+      console.log(response);
       Swal.fire({
         title: "Ocorrência cadastrada com sucesso!",
         icon: "success",
         confirmButtonText: "OK",
       });
-
       await getAndShowOcurrences();
-    })
-    .catch((err) => {
-      Swal.fire({
-        title: "Erro!",
-        text: "Ops! Ocorreu um erro ao tentar cadastrar a ocorrência. Tente novamente mais tarde.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-
-      console.log(err);
+    } else {
+      throw new Error("Não foi possível salvar a ocorrência.");
+    }
+  } catch (err) {
+    Swal.fire({
+      title: "Erro!",
+      text: "Ops! Ocorreu um erro ao tentar cadastrar a ocorrência. Tente novamente mais tarde.",
+      icon: "error",
+      confirmButtonText: "OK",
     });
+    console.error(err);
+  }
+  
 }
 
 async function initMap() {
@@ -186,17 +186,19 @@ async function initMap() {
       }
     );
   }
+
+  await getAndShowOcurrences();
 }
 
-async function addMarker(lat, lng) {
+async function addMarker(lat, lng, title) {
   new google.maps.Marker({
     position: { lat: lat, lng: lng },
     map,
-    title: "Novo marcador",
+    title: title,
     animation: google.maps.Animation.DROP,
     icon: "https://img.icons8.com/color/32/chess-com.png",
   }).addListener("dblclick", () => {
-    alert(`Lat: ${lat} \nLng: ${lng}`);
+    alert(`Lat: ${lat} \nLng: ${lng}\nTitle: ${title}`);
   });
 }
 
@@ -205,20 +207,10 @@ async function getAndShowOcurrences() {
     res.json()
   );
   res.map((ocurrence) => {
+    const title = ocurrence.titulo;
     const coord = ocurrence.localizacaoGeografica.coordinates;
-    addMarker(coord[0], coord[1]);
+    addMarker(coord[0], coord[1], title);
   });
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(
-    browserHasGeolocation
-      ? "Error: The Geolocation service failed."
-      : "Error: Your browser doesn't support geolocation."
-  );
-  infoWindow.open(map);
-}
-
 initMap();
-getAndShowOcurrences();
