@@ -19,8 +19,13 @@ async function postOcurrence() {
   const datetimeValue = new Date(elIptDateTime.value);
 
   const ocurrenceData = {
-    lat: clickLat,
-    lng: clickLng,
+    localizacaoGeografica: {
+      type: "Point",
+      coordinates: {
+        lat: clickLat,
+        lng: clickLng,
+      }
+    },
     titulo: elIptTitle.value,
     tipo: elIptType.value,
     data: datetimeValue,
