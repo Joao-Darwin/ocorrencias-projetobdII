@@ -12,10 +12,10 @@ elBtnCancel.addEventListener("click", () => {
 });
 
 elBtnSubmit.addEventListener("click", () => {
-  post_ocurrence();
+  postOcurrence();
 });
 
-async function post_ocurrence() {
+async function postOcurrence() {
   const datetimeValue = new Date(elIptDateTime.value);
 
   const ocurrenceData = {
@@ -38,7 +38,26 @@ async function post_ocurrence() {
     Cache: "default",
   };
 
-  const res = await fetch("http://10.3.21.185:3000/ocorrencias", options);
+  await fetch("http://10.3.21.185:3000/ocorrencias", options)
+    .then(async () => {
+      Swal.fire({
+        title: "Ocorrência cadastrada com sucesso!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+
+      await getAndShowOcurrences();
+    })
+    .catch((err) => {
+      Swal.fire({
+        title: "Erro!",
+        text: "Ops! Ocorreu um erro ao tentar cadastrar a ocorrência. Tente novamente mais tarde.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+
+      console.log(err);
+    });
 }
 
 async function initMap() {

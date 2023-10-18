@@ -5,6 +5,8 @@
 
     <link rel="stylesheet" type="text/css" href="./style.css" />
     <script type="module" src="./index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -14,8 +16,14 @@
           <label>Título</label>
           <input class="ipt-title" type="text" placeholder="Ex.: Assalto na Rua Jurema">
 
-          <label>Tipo</label>
-          <input class="ipt-type" type="text" placeholder="Informe o tipo do crime">
+          <label>Tipo do crime</label>
+          <select name="Escolha o tipo do crime" class="ipt-type">
+            <option value="" disabled>Escolha o tipo do crime</option>
+            <option value="Assalto">Assalto</option>
+            <option value="Furto">Furto</option>
+            <option value="Violência doméstica">Violência doméstica</option>
+            <option value="Outro">Outro</option>
+          </select>
           
           <label>Data e horário</label>
           <input class="ipt-datetime" type="datetime-local" placeholder="Informe a data e horário do ocorrido">
