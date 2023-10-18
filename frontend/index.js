@@ -207,7 +207,7 @@ async function addMarker(ocurrence) {
       html: `
         <h3>Título: ${ocurrence.titulo}</h3>
         <h3>Tipo: ${ocurrence.tipo}</h3>
-        <h3>Data: ${data.getDate()}/${data.getMonth()}/${data.getFullYear()}</h3>
+        <h3>Data: ${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}</h3>
         <h3>Hora: ${data.getHours()}:${data.getMinutes()}</h3>
       `,
       confirmButtonText: "Fechar",
