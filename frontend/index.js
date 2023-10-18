@@ -26,12 +26,12 @@ async function postOcurrence() {
 
   const options = {
     method: "POST",
-    headers: { // Deve ser "headers", não "Headers"
+    headers: { 
       "Accept": "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(ocurrenceData),
-    cache: "default", // Deve ser "cache", não "Cache"
+    cache: "default",
   };
   
   try {
