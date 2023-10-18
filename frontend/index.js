@@ -43,7 +43,7 @@ async function postOcurrence() {
     Cache: "default",
   };
 
-  await fetch("http://10.3.21.185:3000/ocorrencias", options)
+  await fetch("http://localhost:3000/ocorrencias/save", options)
     .then(async () => {
       Swal.fire({
         title: "Ocorrência cadastrada com sucesso!",
@@ -158,7 +158,7 @@ async function initMap() {
     elModal.style.display = "flex";
     (clickLat = event.latLng.lat()), (clickLng = event.latLng.lng());
     resetFields();
-    addMarker(event.latLng.lat(), event.latLng.lng());
+    // addMarker(event.latLng.lat(), event.latLng.lng());
 
     function resetFields() {
       elIptTitle.value = "";
@@ -201,7 +201,7 @@ async function addMarker(lat, lng) {
 }
 
 async function getAndShowOcurrences() {
-  const res = await fetch("http://10.3.21.185:3000/ocorrencias").then((res) =>
+  const res = await fetch("http://localhost:3000/ocorrencias").then((res) =>
     res.json()
   );
   res.map((ocurrence) => {

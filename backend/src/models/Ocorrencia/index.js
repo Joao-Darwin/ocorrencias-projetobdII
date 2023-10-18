@@ -12,9 +12,6 @@ const Ocorrencia = sequelize.define("Ocorrencia", {
     data: {
         type: DataTypes.DATE
     },
-    hora: {
-        type: DataTypes.STRING
-    },
     localizacaoGeografica: {
         type: DataTypes.GEOMETRY
     }
