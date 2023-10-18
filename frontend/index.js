@@ -7,13 +7,7 @@ const elIptTitle = document.querySelector(".ipt-title");
 const elIptType = document.querySelector(".ipt-type");
 const elIptDateTime = document.querySelector(".ipt-datetime");
 
-elBtnCancel.addEventListener("click", () => {
-  elModal.style.display = "none";
-});
-
-elBtnSubmit.addEventListener("click", () => {
-  postOcurrence();
-});
+initMap();
 
 async function postOcurrence() {
   const datetimeValue = elIptDateTime.value + ":00Z";
@@ -190,27 +184,46 @@ async function initMap() {
   await getAndShowOcurrences();
 }
 
-async function addMarker(lat, lng, title) {
-  new google.maps.Marker({
-    position: { lat: lat, lng: lng },
-    map,
-    title: title,
-    animation: google.maps.Animation.DROP,
-    icon: "https://img.icons8.com/color/32/chess-com.png",
-  }).addListener("dblclick", () => {
-    alert(`Lat: ${lat} \nLng: ${lng}\nTitle: ${title}`);
-  });
-}
-
 async function getAndShowOcurrences() {
   const res = await fetch("http://localhost:3000/ocorrencias").then((res) =>
     res.json()
   );
   res.map((ocurrence) => {
-    const title = ocurrence.titulo;
-    const coord = ocurrence.localizacaoGeografica.coordinates;
-    addMarker(coord[0], coord[1], title);
+    addMarker(ocurrence);
   });
 }
 
-initMap();
+async function addMarker(ocurrence) {
+  const { coordinates } = ocurrence.localizacaoGeografica;
+  new google.maps.Marker({
+    position: { lat: coordinates[0], lng: coordinates[1] },
+    map,
+    title: ocurrence.titulo,
+    animation: google.maps.Animation.DROP,
+    icon: "https://img.icons8.com/color/32/chess-com.png",
+  }).addListener("dblclick", () => {
+    const data = new Date(ocurrence.data);
+    Swal.fire({
+      title: `
+      <div>
+        <h1>Título: ${ocurrence.titulo}</h1>
+        <br>
+        <h2>Tipo: ${ocurrence.tipo}</h2>
+        <br>
+        <h2>Data: ${data.getDate()}/${data.getMonth()}/${data.getFullYear()}</h2>
+        <br>
+        <h2>Hora: ${data.getHours()}:${data.getMinutes()}</h2>
+      </div>
+      `,
+      confirmButtonText: "Fechar",
+    });
+  });
+}
+
+elBtnCancel.addEventListener("click", () => {
+  elModal.style.display = "none";
+});
+
+elBtnSubmit.addEventListener("click", () => {
+  postOcurrence();
+});
