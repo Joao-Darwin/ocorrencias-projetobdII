@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import IGeographicLocation from "../interfaces/IGeographicLocation";
 import IOccurence from "../interfaces/IOccurrence";
 import Occurence from "../models/Occurences";
+import TypeOccurence from "../types/TypeOccurence";
 
 const create = async (req: Request, res: Response) => {
     try {
@@ -48,6 +49,23 @@ const findById = async (req: Request, res: Response) => {
     }
 }
 
+const findByOccurenceType = async (req: Request, res: Response) => {
+    try {
+        let occurenceType = req.query.type;
+        console.log(occurenceType);
+
+        if(!occurenceType) {
+            return res.send("Type invalid");
+        }
+
+        let occurences = await Occurence.find({type: occurenceType});
+
+        return res.status(200).send(occurences);
+    } catch (error: any) {
+        res.status(400).send(error.message);
+    }
+}
+
 const update = async (req: Request, res: Response) => {
     try {
         let id = req.params.id;
@@ -85,6 +103,7 @@ const remove = async (req: Request, res: Response) => {
 export default {
     create,
     findAll,
+    findByOccurenceType,
     findById,
     update,
     remove
