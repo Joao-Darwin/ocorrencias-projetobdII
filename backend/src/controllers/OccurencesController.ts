@@ -48,8 +48,27 @@ const findById = async (req: Request, res: Response) => {
     }
 }
 
+const update = async (req: Request, res: Response) => {
+    try {
+        let id = req.params.id;
+        let occurence: IOccurence = req.body;
+
+        let occurenceWasUpdated = await Occurence.updateOne({_id: id}, {$set: occurence});
+
+        if(occurenceWasUpdated.modifiedCount) {
+            let occurenceUpdated = await Occurence.findById(id);
+            return res.status(200).send(occurenceUpdated);
+        }
+
+        return res.status(501).send("Occurence don't updated :(");
+    } catch (error: any) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
     create,
     findAll,
-    findById
+    findById,
+    update
 }

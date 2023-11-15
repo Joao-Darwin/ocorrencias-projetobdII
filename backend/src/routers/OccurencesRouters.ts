@@ -6,5 +6,6 @@ const occurencesRouters = Router();
 occurencesRouters.post("/save", OccurencesController.create);
 occurencesRouters.get("/", OccurencesController.findAll);
 occurencesRouters.get("/:id", OccurencesController.findById);
+occurencesRouters.put("/:id", OccurencesController.update);
 
 export default occurencesRouters;
