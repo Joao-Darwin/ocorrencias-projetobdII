@@ -32,7 +32,24 @@ const findAll = async (req: Request, res: Response) => {
     }
 }
 
+const findById = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+
+        const occurence = await Occurence.findById(id);
+
+        if(occurence) {
+            return res.status(200).send(occurence);
+        }
+
+        return res.status(404).send(`Occurence not founded. Id: ${id}`);
+    } catch (error: any) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
     create,
-    findAll
+    findAll,
+    findById
 }

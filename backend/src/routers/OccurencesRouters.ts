@@ -1,9 +1,10 @@
 import { Router } from "express";
 import OccurencesController from "../controllers/OccurencesController";
 
-const ocorrencesRouters = Router();
+const occurencesRouters = Router();
 
-ocorrencesRouters.post("/save", OccurencesController.create);
-ocorrencesRouters.get("/", OccurencesController.findAll);
+occurencesRouters.post("/save", OccurencesController.create);
+occurencesRouters.get("/", OccurencesController.findAll);
+occurencesRouters.get("/:id", OccurencesController.findById);
 
-export default ocorrencesRouters;
+export default occurencesRouters;
