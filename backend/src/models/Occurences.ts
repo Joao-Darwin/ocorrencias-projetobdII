@@ -1,6 +1,6 @@
-import { Schema, Model } from "mongoose"
-import IOccurence from "../interfaces/IOccurrence";
+import { Schema, model } from "mongoose";
 import IGeographicLocation from "../interfaces/IGeographicLocation";
+import IOccurence from "../interfaces/IOccurrence";
 
 const pointSchema = new Schema<IGeographicLocation>({
     type: {
@@ -30,4 +30,6 @@ const occurencesSchema = new Schema<IOccurence>({
     geographicLocation: pointSchema
 })
 
-export default new Model("Occurence", occurencesSchema);
+const Occurence = model<IOccurence>("Occurence", occurencesSchema);
+
+export default Occurence;
