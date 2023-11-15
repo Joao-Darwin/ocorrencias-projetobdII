@@ -1,7 +1,20 @@
 import { Schema, Model } from "mongoose"
 import IOccurence from "../interfaces/IOccurrence";
+import IGeographicLocation from "../interfaces/IGeographicLocation";
 
-const occurencesShema = new Schema<IOccurence>({
+const pointSchema = new Schema<IGeographicLocation>({
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
+  });
+
+const occurencesSchema = new Schema<IOccurence>({
     title: {
         type: String,
         required: true
@@ -14,10 +27,7 @@ const occurencesShema = new Schema<IOccurence>({
         type: Date,
         required: true
     },
-    geographicLocation: {
-        type: Location,
-        require: true
-    }
+    geographicLocation: pointSchema
 })
 
-export default new Model("Occurence", occurencesShema);
+export default new Model("Occurence", occurencesSchema);
