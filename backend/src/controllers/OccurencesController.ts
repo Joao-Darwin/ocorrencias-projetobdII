@@ -16,12 +16,23 @@ const create = async (req: Request, res: Response) => {
         occurence.date = occurenceCreated.date;
         occurence.geographicLocation = geographicLocation;
 
-        return res.status(200).send(occurence);
+        return res.status(201).send(occurence);
     } catch (error: any) {
         res.status(501).send(error.message);
     }
 }
 
+const findAll = async (req: Request, res: Response) => {
+    try {
+        const allOccurences = await Occurence.find();
+
+        res.status(200).send(allOccurences);
+    } catch (error: any) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
-    create
+    create,
+    findAll
 }
