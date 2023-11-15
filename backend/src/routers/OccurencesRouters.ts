@@ -7,5 +7,6 @@ occurencesRouters.post("/save", OccurencesController.create);
 occurencesRouters.get("/", OccurencesController.findAll);
 occurencesRouters.get("/:id", OccurencesController.findById);
 occurencesRouters.put("/:id", OccurencesController.update);
+occurencesRouters.delete("/:id", OccurencesController.remove);
 
 export default occurencesRouters;

@@ -66,9 +66,26 @@ const update = async (req: Request, res: Response) => {
     }
 }
 
+const remove = async (req: Request, res: Response) => {
+    try {
+        let id = req.params.id;
+
+        let occurenceWasRemoved = await Occurence.deleteOne({_id: id});
+
+        if(occurenceWasRemoved.deletedCount) {
+            return res.status(200).send("Occurence were deleted!");
+        }
+
+        return res.status(404).send(`Occurence not founded. Id: ${id}`);
+    } catch (error: any) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
     create,
     findAll,
     findById,
-    update
+    update,
+    remove
 }
