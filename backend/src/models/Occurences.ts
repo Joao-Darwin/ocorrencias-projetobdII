@@ -21,6 +21,7 @@ const occurencesSchema = new Schema<IOccurence>({
     },
     type: {
         type: String,
+        enum: ['Assalto', 'Furto', 'Outros'],
         required: true,
     },
     date: {
