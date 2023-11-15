@@ -52,7 +52,6 @@ const findById = async (req: Request, res: Response) => {
 const findByOccurenceType = async (req: Request, res: Response) => {
     try {
         let occurenceType = req.query.type;
-        console.log(occurenceType);
 
         if(!occurenceType) {
             return res.send("Type invalid");
