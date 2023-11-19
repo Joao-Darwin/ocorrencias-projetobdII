@@ -6,36 +6,47 @@ const elBtnSubmit = document.querySelector(".btn-submit");
 const elIptTitle = document.querySelector(".ipt-title");
 const elIptType = document.querySelector(".ipt-type");
 const elIptDateTime = document.querySelector(".ipt-datetime");
+let occurrenceId = "";
+let modalAction = "";
 
 initMap();
 
-async function postOcurrence() {
+function toggleModal(mode) {
+  modalAction = mode;
+  elModal.style.display = (mode.length ? "flex" : "none");
+  elBtnSubmit.textContent = (mode === "post" ? "Criar" : "Editar");
+}
+
+async function post_occurrence() {
   const datetimeValue = elIptDateTime.value + ":00Z";
 
-  const ocurrenceData = {
-    titulo: elIptTitle.value,
-    tipo: elIptType.value,
-    data: datetimeValue,
-    localizacaoGeografica: {
+  const occurrenceData = {
+    title: elIptTitle.value,
+    type: elIptType.value,
+    date: datetimeValue,
+    geographicLocation: {
       type: "Point",
-      coordinates: [clickLat, clickLng]
+      coordinates: [clickLat, clickLng],
     },
   };
 
-  console.log(ocurrenceData);
+  console.log(occurrenceData);
 
   const options = {
     method: "POST",
-    headers: { 
-      "Accept": "application/json",
+    headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(ocurrenceData),
+    body: JSON.stringify(occurrenceData),
     cache: "default",
   };
-  
+
   try {
-    const response = await fetch("http://localhost:3000/ocorrencias/save", options);
+    const response = await fetch(
+      "http://localhost:3000/occurrences/save",
+      options
+    );
     if (response.ok) {
       console.log(response);
       Swal.fire({
@@ -43,7 +54,8 @@ async function postOcurrence() {
         icon: "success",
         confirmButtonText: "OK",
       });
-      await getAndShowOcurrences();
+      await getAndShowOccurrences();
+      toggleModal("");
     } else {
       throw new Error("Não foi possível salvar a ocorrência.");
     }
@@ -56,7 +68,91 @@ async function postOcurrence() {
     });
     console.error(err);
   }
-  
+}
+
+async function delete_occurrence(id) {
+  const options = {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    cache: "default",
+  };
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/occurrences/${id}`,
+      options
+    );
+    if (response.ok) {
+      console.log(response);
+      Swal.fire({
+        title: "Ocorrência removida com sucesso!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      await initMap();
+      toggleModal("");
+    } else {
+      throw new Error("Não foi possível remover a ocorrência.");
+    }
+  } catch (err) {
+    Swal.fire({
+      title: "Erro!",
+      text: "Ops! Ocorreu um erro ao tentar excluir a ocorrência. Tente novamente mais tarde.",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+    console.error(err);
+  }
+}
+
+async function update_occurrence() {
+  const datetimeValue = elIptDateTime.value + ":00Z";
+
+  const newOccurrenceData = {
+    title: elIptTitle.value,
+    type: elIptType.value,
+    date: datetimeValue,
+  };
+
+  const options = {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newOccurrenceData),
+    cache: "default",
+  };
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/occurrences/${occurrenceId}`,
+      options
+    );
+    if (response.ok) {
+      console.log(response);
+      Swal.fire({
+        title: "Ocorrência editada com sucesso!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      await getAndShowOccurrences();
+      toggleModal("");
+    } else {
+      throw new Error("Não foi possível editar a ocorrência.");
+    }
+  } catch (err) {
+    Swal.fire({
+      title: "Erro!",
+      text: "Ops! Ocorreu um erro ao tentar editar a ocorrência. Tente novamente mais tarde.",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+    console.error(err);
+  }
 }
 
 async function initMap() {
@@ -149,10 +245,10 @@ async function initMap() {
   });
 
   google.maps.event.addListener(map, "click", (event) => {
-    elModal.style.display = "flex";
-    (clickLat = event.latLng.lat()), (clickLng = event.latLng.lng());
+    toggleModal("post");
+    clickLat = event.latLng.lat();
+    clickLng = event.latLng.lng();
     resetFields();
-    // addMarker(event.latLng.lat(), event.latLng.lng());
 
     function resetFields() {
       elIptTitle.value = "";
@@ -181,44 +277,83 @@ async function initMap() {
     );
   }
 
-  await getAndShowOcurrences();
+  await getAndShowOccurrences();
 }
 
-async function getAndShowOcurrences() {
-  const res = await fetch("http://localhost:3000/ocorrencias").then((res) =>
-    res.json()
+async function getAndShowOccurrences() {
+  const res = await fetch("http://localhost:3000/occurrences/findAll").then(
+    (res) => res.json()
   );
-  res.map((ocurrence) => {
-    addMarker(ocurrence);
+  res.map((occurrence) => {
+    addMarker(occurrence);
   });
 }
 
-async function addMarker(ocurrence) {
-  const { coordinates } = ocurrence.localizacaoGeografica;
+async function addMarker(occurrence) {
+  const { coordinates } = occurrence.geographicLocation;
   new google.maps.Marker({
     position: { lat: coordinates[0], lng: coordinates[1] },
     map,
-    title: ocurrence.titulo,
+    title: occurrence.title,
     animation: google.maps.Animation.DROP,
     icon: "./icons8-marcador-48.png",
   }).addListener("dblclick", () => {
-    const data = new Date(ocurrence.data);
+    const date = new Date(occurrence.date);
     Swal.fire({
       html: `
-        <h3>Título: ${ocurrence.titulo}</h3>
-        <h3>Tipo: ${ocurrence.tipo}</h3>
-        <h3>Data: ${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}</h3>
-        <h3>Hora: ${data.getHours()}:${data.getMinutes()}</h3>
+        <h3>Título: ${occurrence.title}</h3>
+        <h3>Tipo: ${occurrence.type}</h3>
+        <h3>Data: ${(date.getDate() < 10 && "0") + date.getDate()}/${
+        (date.getMonth() < 10 && "0") + date.getMonth() + 1
+      }/${date.getFullYear()}</h3>
+        <h3>Hora: ${(date.getHours() < 10 && "0") + date.getHours()}:${
+        (date.getMinutes() < 10 && "0") + date.getMinutes()
+      }</h3>
       `,
-      confirmButtonText: "Fechar",
+      showCancelButton: true,
+      showDenyButton: true,
+      cancelButtonText: "Fechar",
+      confirmButtonText: "Editar",
+      denyButtonText: "Excluir",
+      cancelButtonColor: "#7f8c8d",
+      denyButtonColor: "#e74c3c",
+      confirmButtonCollor: "#2ecc71",
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        toggleModal("edit");
+        occurrenceId = occurrence._id;
+        elIptDateTime.value = JSON.stringify(occurrence.date).substring(1, 20);
+        elIptTitle.value = occurrence.title;
+        elIptType.value = occurrence.type;
+      } else if(result.isDenied) {
+        // confirmando
+        await Swal.fire({
+          title: "Você tem certeza?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sim",
+          cancelButtonText: "Cancelar",
+        }).then(async(result) => {
+          if (result.isConfirmed) {
+            await delete_occurrence(occurrence._id);
+
+          }
+        });
+      }
     });
   });
 }
 
 elBtnCancel.addEventListener("click", () => {
-  elModal.style.display = "none";
+  toggleModal("");
 });
 
 elBtnSubmit.addEventListener("click", () => {
-  postOcurrence();
+  if(modalAction === "edit") {
+    update_occurrence();
+  } else {
+    post_occurrence();
+  }
 });
