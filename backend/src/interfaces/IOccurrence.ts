@@ -1,9 +1,9 @@
-import TypeOccurence from "../types/TypeOccurence";
+import TypeOccurrence from "../types/TypeOccurrence";
 import IGeographicLocation from "./IGeographicLocation";
 
-export default interface IOccurence {
+export default interface IOccurrence {
     title: string,
-    type: TypeOccurence,
+    type: TypeOccurrence,
     date: Date,
     geographicLocation: IGeographicLocation
 }
