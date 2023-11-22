@@ -1,6 +1,16 @@
+:root {
+  --grey: #425867;
+}
+
 .container {
   display: flex;
   height: 100%;
+}
+
+#charts {
+  width: 40%;
+  height: 100vh;
+  background: var(--grey);
 }
 
 #map {
@@ -17,7 +27,7 @@ body {
 
 .modal {
   display: none;
-  background: linear-gradient(45deg, rgb(163, 137, 233), rgb(78, 48, 211));
+  background: var(--grey);
   padding: 1rem;
   align-items: center;
   width: 40%;
