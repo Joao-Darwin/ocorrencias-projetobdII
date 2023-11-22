@@ -303,11 +303,11 @@ async function addMarker(occurrence) {
       html: `
         <h3>Título: ${occurrence.title}</h3>
         <h3>Tipo: ${occurrence.type}</h3>
-        <h3>Data: ${(date.getDate() < 10 && "0") + date.getDate()}/${
-        (date.getMonth() < 10 && "0") + date.getMonth() + 1
-      }/${date.getFullYear()}</h3>
-        <h3>Hora: ${(date.getHours() < 10 && "0") + date.getHours()}:${
-        (date.getMinutes() < 10 && "0") + date.getMinutes()
+        <h3>Data: ${(date.getUTCDate(-3) < 10 && "0") + date.getUTCDate(-3)}/${
+        (date.getUTCMonth(-3) < 10 && "0") + date.getUTCMonth(-3) + 1
+      }/${date.getUTCFullYear(-3)}</h3>
+        <h3>Hora: ${(date.getUTCHours(-3) < 10 && "0") + date.getUTCHours(-3)}:${
+        (date.getUTCMinutes(-3) < 10 && "0") + date.getUTCMinutes(-3)
       }</h3>
       `,
       showCancelButton: true,
