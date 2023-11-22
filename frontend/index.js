@@ -26,7 +26,7 @@ async function post_occurrence() {
     date: datetimeValue,
     geographicLocation: {
       type: "Point",
-      coordinates: [clickLat, clickLng],
+      coordinates: [clickLng, clickLat],
     },
   };
 
@@ -292,7 +292,7 @@ async function getAndShowOccurrences() {
 async function addMarker(occurrence) {
   const { coordinates } = occurrence.geographicLocation;
   new google.maps.Marker({
-    position: { lat: coordinates[0], lng: coordinates[1] },
+    position: { lat: coordinates[1], lng: coordinates[0] },
     map,
     title: occurrence.title,
     animation: google.maps.Animation.DROP,
