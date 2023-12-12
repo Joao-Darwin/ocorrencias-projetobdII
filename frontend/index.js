@@ -1,8 +1,11 @@
 let map, infoWindow;
 let clickLat, clickLng;
 const elModal = document.querySelector(".modal");
+const elTop3 = document.querySelector("#top3");
+const elCharts = document.querySelector("#charts");
 const elBtnCancel = document.querySelector(".btn-cancel");
 const elBtnSubmit = document.querySelector(".btn-submit");
+const elBtnSwitch = document.querySelector(".btn-switch");
 const elIptTitle = document.querySelector(".ipt-title");
 const elIptType = document.querySelector(".ipt-type");
 const elIptDateTime = document.querySelector(".ipt-datetime");
@@ -159,7 +162,7 @@ async function initMap() {
   //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
 
-  map = new Map(document.getElementById("map"), {
+  map = await new Map(document.getElementById("map"), {
     center: { lat: -6.889844787676005, lng: -38.55889240586281 },
     zoom: 14,
     styles: [
@@ -346,6 +349,30 @@ async function addMarker(occurrence) {
   });
 }
 
+async function switchTop3() {
+  const top3 = await getTop3();
+  top3.map((v, i) => {
+    elTop3.innerHTML += `<div style="background: ${i == 0 ? "#cfa423" : i == 1 ? "#a2a2a2" : "#5b4012"}; color: ${i == 2 ? "#eee" : "#333"}">${i + 1} - ${v.type} | Qtd.: ${v.count}</div>`;
+  });
+  elCharts.style.display = "none";
+  elTop3.style.display = "flex";
+  elBtnSwitch.textContent = "Ver gráficos";
+
+  async function getTop3() {
+    const res = await fetch("http://localhost:3000/occurrences/findTop3").then(
+      (res) => res.json()
+    );
+    return res;
+  }
+}
+
+async function switchCharts() {
+  elTop3.style.display = "none";
+  elTop3.innerHTML = "";
+  elCharts.style.display = "block";
+  elBtnSwitch.textContent = "Ver top 3 tipos mais frequentes";
+}
+
 elBtnCancel.addEventListener("click", () => {
   toggleModal("");
 });
@@ -355,5 +382,13 @@ elBtnSubmit.addEventListener("click", () => {
     update_occurrence();
   } else {
     post_occurrence();
+  }
+});
+
+elBtnSwitch.addEventListener("click", () => {
+  if(elTop3.style.display == "none") {
+    switchTop3();
+  } else {
+    switchCharts();
   }
 });

@@ -11,10 +11,55 @@ gmp-map {
   height: 100%;
 }
 
-#charts {
-  width: 40%;
-  height: 100vh;
+.subcontainer {
+  width: 55%;
   background: var(--grey);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#charts {
+  width: 100%;
+  height: 100vh;
+  color: #5b4012;
+}
+
+#top3 {
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+#top3 div {
+  color: #333;
+  width: 100%;
+  font-size: 1.5rem;
+  border-radius: 5rem;
+  padding: 15px;
+}
+
+.subcontainer button {
+  color: #fff;
+  border: none;
+  padding: 7px;
+  cursor: pointer;
+  transition: .2s;
+  background: #0b879d;
+  font-size: 1.2rem;
+  border-radius: 5rem;
+}
+
+.subcontainer button:hover {
+  box-shadow: 0 2px #065461;
+  transform: translateY(-2px);
+}
+
+.subcontainer button:active {
+  box-shadow: none !important;
+  transform: none !important;
 }
 
 #map {
@@ -71,18 +116,17 @@ select {
   gap: 8px;
 }
 
-.buttons .btn-cancel {
+.btn-cancel {
   background-color: #e74c3c;
 }
 
-.buttons .btn-cancel:hover {
+.btn-cancel:hover {
   box-shadow: 0 2px #983328;
   transform: translateY(-2px);
 }
 
-.buttons button {
+.btn-cancel, .btn-submit {
   border-radius: 1rem;
-  background-color: #27ae60;
   color: #fff;
   border: none;
   padding: 7px;
@@ -90,12 +134,17 @@ select {
   transition: .2s;
 }
 
-.buttons button:hover {
+.btn-submit {
+  background-color: #27ae60;
+}
+
+.btn-submit:hover {
   box-shadow: 0 2px #1b7a43;
   transform: translateY(-2px);
 }
 
-.buttons button:active {
+.btn-cancel:active, .btn-submit:active {
   box-shadow: none !important;
   transform: none !important;
 }
+

@@ -9,17 +9,20 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="sweetalert2.all.min.js"></script>
   
-  <!-- The callback parameter is required, so we use console.debug as a noop -->
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTPpJehp65Tlw5a5pUl3gpZmRfysOOCg&callback=console.debug&libraries=maps,marker&v=beta">
+  <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=console.debug&libraries=maps,marker&v=beta">
   </script>
 </head>
 
 <body>
   <div class="container">
-    <div id="charts">
-      <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="48%" src="https://charts.mongodb.com/charts-bd2-ktcka/embed/charts?id=657883f7-ab1c-49b8-8fdb-5f006f6cfa78&maxDataAge=60&theme=dark&autoRefresh=true"></iframe>
-      <hr style="color: #a7b1b8">
-      <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="48%" src="https://charts.mongodb.com/charts-bd2-ktcka/embed/charts?id=65789a5a-7a5e-4036-8f62-eedeed374afb&maxDataAge=60&theme=dark&autoRefresh=true"></iframe>
+    <div class="subcontainer">
+      <button class="btn-switch">Top 3 tipos de ocorrências mais frequentes</button>
+      <div id="charts">
+        <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="48%" src="https://charts.mongodb.com/charts-bd2-ktcka/embed/charts?id=657883f7-ab1c-49b8-8fdb-5f006f6cfa78&maxDataAge=60&theme=dark&autoRefresh=true"></iframe>
+        <hr style="color: #a7b1b8">
+        <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="48%" src="https://charts.mongodb.com/charts-bd2-ktcka/embed/charts?id=65789a5a-7a5e-4036-8f62-eedeed374afb&maxDataAge=60&theme=dark&autoRefresh=true"></iframe>
+      </div>
+      <div id="top3" style="display: none"></div>
     </div>
     <div id="map"></div>
     <div class="modal">
@@ -32,9 +35,11 @@
           <option value="" disabled>Escolha o tipo do crime</option>
           <option value="Assalto">Assalto</option>
           <option value="Furto">Furto</option>
+          <option value="Assassinato">Assassinato</option>
+          <option value="Tentativa de omicídio">Tentativa de omicídio</option>
           <option value="Outros">Outros</option>
         </select>
-
+        
         <label>Data e horário</label>
         <input class="ipt-datetime" type="datetime-local" placeholder="Informe a data e horário do ocorrido">
 
