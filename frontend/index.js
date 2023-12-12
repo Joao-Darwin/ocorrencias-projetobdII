@@ -26,7 +26,7 @@ async function post_occurrence() {
     date: datetimeValue,
     geographicLocation: {
       type: "Point",
-      coordinates: [clickLat, clickLng],
+      coordinates: [clickLng, clickLat],
     },
   };
 
@@ -292,7 +292,7 @@ async function getAndShowOccurrences() {
 async function addMarker(occurrence) {
   const { coordinates } = occurrence.geographicLocation;
   new google.maps.Marker({
-    position: { lat: coordinates[0], lng: coordinates[1] },
+    position: { lat: coordinates[1], lng: coordinates[0] },
     map,
     title: occurrence.title,
     animation: google.maps.Animation.DROP,
@@ -303,11 +303,11 @@ async function addMarker(occurrence) {
       html: `
         <h3>Título: ${occurrence.title}</h3>
         <h3>Tipo: ${occurrence.type}</h3>
-        <h3>Data: ${(date.getDate() < 10 && "0") + date.getDate()}/${
-        (date.getMonth() < 10 && "0") + date.getMonth() + 1
-      }/${date.getFullYear()}</h3>
-        <h3>Hora: ${(date.getHours() < 10 && "0") + date.getHours()}:${
-        (date.getMinutes() < 10 && "0") + date.getMinutes()
+        <h3>Data: ${(date.getUTCDate(-3) < 10 && "0") + date.getUTCDate(-3)}/${
+        (date.getUTCMonth(-3) < 10 && "0") + date.getUTCMonth(-3) + 1
+      }/${date.getUTCFullYear(-3)}</h3>
+        <h3>Hora: ${(date.getUTCHours(-3) < 10 && "0") + date.getUTCHours(-3)}:${
+        (date.getUTCMinutes(-3) < 10 && "0") + date.getUTCMinutes(-3)
       }</h3>
       `,
       showCancelButton: true,
