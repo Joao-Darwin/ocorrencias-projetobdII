@@ -2,6 +2,10 @@
   --grey: #425867;
 }
 
+gmp-map {
+  height: 100%;
+}
+
 .container {
   display: flex;
   height: 100%;

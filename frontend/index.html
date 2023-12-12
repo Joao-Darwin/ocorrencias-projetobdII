@@ -8,14 +8,18 @@
   <script type="module" src="./index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="sweetalert2.all.min.js"></script>
+  
+  <!-- The callback parameter is required, so we use console.debug as a noop -->
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbTPpJehp65Tlw5a5pUl3gpZmRfysOOCg&callback=console.debug&libraries=maps,marker&v=beta">
+  </script>
 </head>
 
 <body>
   <div class="container">
     <div id="charts">
-      <iframe style="background: var(--grey);border: none;border-radius: 2px;" width="100%" height="48%" src="https://charts.mongodb.com/charts-project-0-pcjfr/embed/charts?id=6554fb36-ff84-4cf7-83d6-3feb46582099&maxDataAge=3600&theme=dark&autoRefresh=true"></iframe>
+      <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="48%" src="https://charts.mongodb.com/charts-bd2-ktcka/embed/charts?id=657883f7-ab1c-49b8-8fdb-5f006f6cfa78&maxDataAge=60&theme=dark&autoRefresh=true"></iframe>
       <hr style="color: #a7b1b8">
-      <iframe style="background: var(--grey);border: none;border-radius: 2px;" width="100%" height="48%" src="https://charts.mongodb.com/charts-project-0-pcjfr/embed/charts?id=65550144-ff84-4d92-8eb2-3feb46e2d7a3&maxDataAge=3600&theme=dark&autoRefresh=true"></iframe>
+      <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="48%" src="https://charts.mongodb.com/charts-bd2-ktcka/embed/charts?id=65789a5a-7a5e-4036-8f62-eedeed374afb&maxDataAge=60&theme=dark&autoRefresh=true"></iframe>
     </div>
     <div id="map"></div>
     <div class="modal">
@@ -40,10 +44,6 @@
         </div>
       </div>
     </div>
-
-    <!-- prettier-ignore -->
-    <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
-        ({ key: "", v: "weekly" });</script>
   </div>
 </body>
 
