@@ -53,11 +53,11 @@ const findById = async (req: Request, res: Response) => {
 };
 
 const findTop3 = async (req: Request, res: Response) => {
+  const keyWithTop3Occurrences = "top3";
   try {
-    const cachedData = await redis.get("top3");
+    const cachedData = await redis.get(keyWithTop3Occurrences);
 
     if (cachedData) {
-      console.log("Top3 retrieved from cache memory");
       return res.status(200).json(JSON.parse(cachedData));
     }
 
@@ -73,7 +73,7 @@ const findTop3 = async (req: Request, res: Response) => {
       },
     ]).then((r) => r);
 
-    redis.setEx("top3", 60, JSON.stringify(top3));
+    redis.setEx(keyWithTop3Occurrences, 60, JSON.stringify(top3));
 
     return res.status(200).json(top3);
   } catch (error: any) {
