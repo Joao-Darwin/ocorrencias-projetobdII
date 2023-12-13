@@ -2,20 +2,13 @@
 
 <head>
   <title>Simple Map</title>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
   <link rel="stylesheet" type="text/css" href="./style.css" />
-  <script type="module" src="./index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="sweetalert2.all.min.js"></script>
-  
-  <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=console.debug&libraries=maps,marker&v=beta">
-  </script>
 </head>
 
 <body>
   <div class="container">
-    <div class="subcontainer">
+    <div class="subcontainer1">
       <button class="btn-switch">Top 3 tipos de ocorrências mais frequentes</button>
       <div id="charts">
         <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="48%" src="https://charts.mongodb.com/charts-bd2-ktcka/embed/charts?id=657883f7-ab1c-49b8-8fdb-5f006f6cfa78&maxDataAge=60&theme=dark&autoRefresh=true"></iframe>
@@ -36,7 +29,7 @@
           <option value="Assalto">Assalto</option>
           <option value="Furto">Furto</option>
           <option value="Assassinato">Assassinato</option>
-          <option value="Tentativa de omicídio">Tentativa de omicídio</option>
+          <option value="Tentativa de Homicídio">Tentativa de Homicídio</option>
           <option value="Outros">Outros</option>
         </select>
         
@@ -50,6 +43,11 @@
       </div>
     </div>
   </div>
+
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMFroPir3niKPg2vajIMsohU1AeaZz_DQ&callback=console.debug&libraries=maps,marker&v=beta"></script>
+  <script type="module" src="./index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.all.min.js"></script>
 </body>
 
 </html>

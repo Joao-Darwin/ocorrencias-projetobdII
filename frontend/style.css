@@ -11,7 +11,7 @@ gmp-map {
   height: 100%;
 }
 
-.subcontainer {
+.subcontainer1 {
   width: 55%;
   background: var(--grey);
   display: flex;
@@ -36,12 +36,13 @@ gmp-map {
 #top3 div {
   color: #333;
   width: 100%;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
   border-radius: 5rem;
   padding: 15px;
 }
 
-.subcontainer button {
+.subcontainer1 button {
   color: #fff;
   border: none;
   padding: 7px;
@@ -52,12 +53,12 @@ gmp-map {
   border-radius: 5rem;
 }
 
-.subcontainer button:hover {
+.subcontainer1 button:hover {
   box-shadow: 0 2px #065461;
   transform: translateY(-2px);
 }
 
-.subcontainer button:active {
+.subcontainer1 button:active {
   box-shadow: none !important;
   transform: none !important;
 }
@@ -116,16 +117,16 @@ select {
   gap: 8px;
 }
 
-.btn-cancel {
+.buttons .btn-cancel {
   background-color: #e74c3c;
 }
 
-.btn-cancel:hover {
+.buttons .btn-cancel:hover {
   box-shadow: 0 2px #983328;
   transform: translateY(-2px);
 }
 
-.btn-cancel, .btn-submit {
+.buttons button {
   border-radius: 1rem;
   color: #fff;
   border: none;
@@ -134,17 +135,16 @@ select {
   transition: .2s;
 }
 
-.btn-submit {
+.buttons .btn-submit {
   background-color: #27ae60;
 }
 
-.btn-submit:hover {
+.buttons .btn-submit:hover {
   box-shadow: 0 2px #1b7a43;
   transform: translateY(-2px);
 }
 
-.btn-cancel:active, .btn-submit:active {
+.buttons button:active {
   box-shadow: none !important;
   transform: none !important;
 }
-
